@@ -28,10 +28,9 @@ class car
         $uuid_car = $_POST['uuid_car'];
         $start_date = $_POST['start_date'];
         $end_date = $_POST['end_date'];
-        $created_date = $_POST['created_date'];
-        $updated_date = $_POST['updated_date'];
+
         $carModel = new carModel();
-        $result = $carModel->storeData($customer,$uuid_car,$start_date,$end_date,$created_date,$updated_date);
+        $result = $carModel->storeData($customer,$uuid_car,$start_date,$end_date);
         if($result==true){
             $response = [
                 "status"=>"success",
@@ -52,10 +51,21 @@ class car
     }
     public function delete($id)
     {
+        $id = $id;
+        $deleteCar = new carModel();
+        $result = $deleteCar->deleteData($id);
+
+        if($result==true){
         $response = [
             "status" => 'success',
-            "message" => "delete is success"
+            "message" => "Anda Berhasil Menghapus Data!"
         ];
+        }else{
+            $response = [
+                "status" => 'failed',
+                "message" => "Anda Gagal Menghapus Data!"
+            ];
+        }
         echo json_encode($response, JSON_PRETTY_PRINT);
     }
 }

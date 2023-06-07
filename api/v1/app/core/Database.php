@@ -5,7 +5,7 @@ class DB
     public $host = "localhost";
     public $username = "root";
     public $password = "";
-    public $database = "rent_drive";
+    public $database = "rent_api";
 
     public $conn;
 
@@ -28,9 +28,13 @@ public function selectWhere($query){
     $result = mysqli_query($this->conn,$query);
     return $result;
 }
-public  function delete($query){
+public  function delete($query):bool{
     $result = mysqli_query($this->conn,$query);
-    return $result;
+    if(mysqli_affected_rows($this->conn)){
+    return true;
+    }else{
+        return false;
+    }
 }
 
 public function update($query){
@@ -44,6 +48,7 @@ function insert($query){
     }catch (Exception $exception){
         $result = $exception->getMessage();
     }
+//
     return $result;
 
 }
