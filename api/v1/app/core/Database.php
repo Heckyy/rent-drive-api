@@ -38,8 +38,13 @@ public  function delete($query):bool{
 }
 
 public function update($query){
+
+    try {
     $result = mysqli_query($this->conn,$query);
     return $result;
+    }catch (Exception $e){
+       return $e->getMessage();
+    }
 }
 function insert($query){
 

@@ -10,6 +10,8 @@ class App
     {
 
         $url = $_GET['url'];
+//        var_dump($url);
+//        die();
 
         // Explode url in to array
         $explode_url = explode("/", $url);
@@ -22,10 +24,23 @@ class App
         }
 
 //        require_once  __DIR__."/../controllers/car.php";
+        require_once "app/controllers/user.php";
         require_once "app/controllers/car.php";
+        require_once "app/controllers/transaction.php";
+        require_once "app/controllers/payment.php";
 
 
-        $this->controller =  new \controllers\car();
+
+        if($this->controller=="car"){
+            $this->controller = new \controllers\car();
+        }else if ($this->controller=="user"){
+            $this->controller = new \controllers\user();
+        }else if ($this->controller=="transaction"){
+            $this->controller = new transaction();
+        }else{
+            $this->controller = new \controllers\payment();
+        }
+
 
         if($explode_url[1]!=NULL){
             $this->method = $explode_url[1];
@@ -33,11 +48,10 @@ class App
         }
         if(!empty($explode_url)){
             $this->params = array_values($explode_url);
-
         }
 
-
             call_user_func_array([$this->controller, $this->method], $this->params);
+
         }
 
 }
